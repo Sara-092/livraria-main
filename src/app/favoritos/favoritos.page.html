@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-toolbar >
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title> Favoritos</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  @if (erro) { <p role="alert">{{ erro }}</p> }
+  @else {
+  @for (livro of favoritos; track livro.key) {
+    <ion-card [appDestaqueFavorito]="true">
+      <div class="linha-livro">
+        @if (livro.cover_id) {
+          <img appCapaAlternativa class="capa-pequena" [src]="'https://covers.openlibrary.org/b/id/' + livro.cover_id + '-M.jpg?default=false'" [alt]="livro.title" />
+        } @else {
+          <div class="capa-pequena sem-capa">📖</div>
+        }
+        <div>
+          <ion-card-header>
+            <ion-card-subtitle>{{ livro.authors?.[0]?.name ?? 'Autor desconhecido' }}</ion-card-subtitle>
+            <ion-card-title class="titulo-livro">{{ livro.title }}</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-button size="small" shape="round" [routerLink]="['/detalhes', livro.key.replace('/works/', '')]">
+              Ver detalhes
+            </ion-button>
+            <ion-button size="small" shape="round" color="danger" fill="outline" (click)="remover(livro.key)">
+              Remover
+            </ion-button>
+          </ion-card-content>
+        </div>
+      </div>
+    </ion-card>
+  } @empty {
+    <div class="centro">
+      <p>Você ainda não favoritou nenhum livro. <br />Abra um livro e toque em "Adicionar aos favoritos".</p>
+    </div>
+  }
+  }
+</ion-content>

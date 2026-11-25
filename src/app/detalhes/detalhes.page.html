@@ -1,0 +1,70 @@
+<ion-header>
+  <ion-toolbar >
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Detalhes</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  @if (carregando) { <p class="centro" role="status">Carregando livro...</p> }
+  @else if (erro) { <p class="centro" role="alert">Não foi possível carregar o livro.</p><ion-button (click)="carregar()">Tentar novamente</ion-button> }
+  @else if (livro) {
+    <div class="centro">
+      @if (livro.cover_id) {
+        <img appCapaAlternativa class="capa-detalhe" [src]="'https://covers.openlibrary.org/b/id/' + livro.cover_id + '-L.jpg?default=false'" [alt]="livro.title" />
+      }
+    </div>
+
+    <h1 class="titulo-detalhe">{{ livro.title }}</h1>
+
+    <ion-button
+      expand="block"
+      shape="round"
+      [color]="favorito ? 'danger' : 'primary'"
+      (click)="alternarFavorito()"
+    >
+      @if (favorito) {
+         Remover dos favoritos
+      } @else {
+         Adicionar aos favoritos
+      }
+    </ion-button>
+
+    <p><strong>Autor:</strong> {{ livro.authors?.[0]?.name ?? 'Autor desconhecido' }}</p>
+    <p><strong>Primeira publicação:</strong> {{ livro.first_publish_year ?? 'Não informada' }}</p>
+
+    @if (livro.edition_count) {
+      <p><strong>Edições publicadas:</strong> {{ livro.edition_count }}</p>
+    }
+
+    @if (livro.pages) {
+      <p><strong>Páginas (média das edições):</strong> {{ livro.pages }}</p>
+    }
+
+    @if (livro.rating) {
+      <p><strong>Nota média dos leitores:</strong> {{ livro.rating.toFixed(1) }} de 5</p>
+    }
+
+    @if (livro.language?.length) {
+      <p><strong>Idiomas das edições:</strong> {{ livro.language.slice(0, 6).join(', ') }}</p>
+    }
+
+    @if (livro.first_sentence) {
+      <h3>Primeira frase</h3>
+      <p class="frase">{{ expandido ? livro.first_sentence : (livro.first_sentence | resumir:180) }}</p>
+      @if (livro.first_sentence.length > 180) { <ion-button fill="clear" [attr.aria-expanded]="expandido" (click)="expandido = !expandido">{{ expandido ? "Ler menos" : "Ler mais" }}</ion-button> }
+    }
+
+    @if (livro.subject?.length) {
+      <h3>Assuntos</h3>
+      @for (assunto of (livro.subject | slice:0:8); track assunto) {
+        <ion-chip color="primary">{{ assunto }}</ion-chip>
+      }
+    }
+  } @else {
+    <p class="centro">Livro não encontrado no catálogo.</p>
+  }
+  @if (erroFavoritos) { <p role="alert">{{ erroFavoritos }}</p> }
+</ion-content>

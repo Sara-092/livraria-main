@@ -1,0 +1,103 @@
+.hero {
+  background: linear-gradient(135deg, #cb8cf0, #a541f7);
+  color: white;
+  text-align: center;
+  padding: 40px 20px;
+  border-radius: 0 0 24px 24px;
+
+  h1 {
+    font-size: 26px;
+    font-weight: bold;
+    margin-bottom: 8px;
+  }
+
+  p {
+    margin-bottom: 20px;
+    opacity: 0.9;
+  }
+}
+
+.categorias {
+  display: flex;
+  gap: 4px;
+  overflow-x: auto;
+  padding: 4px 12px 8px;
+
+  ion-chip {
+    flex-shrink: 0;
+    cursor: pointer;
+  }
+}
+
+.titulo-secao {
+  margin: 20px 16px 8px;
+  font-weight: bold;
+}
+
+.centro {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  padding: 20px;
+}
+
+.capa-grande {
+  display: block;
+  height: 320px;
+  width: auto;
+  max-width: 90%;
+  margin: 20px auto 8px;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+}
+
+.linha-livro {
+  display: flex;
+  align-items: center;
+}
+
+.capa-pequena {
+  width: 90px;
+  height: 130px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.sem-capa {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #e0e0e0;
+  font-size: 32px;
+}
+
+.titulo-livro {
+  font-size: 18px;
+}
+
+.capa-detalhe {
+  width: 200px;
+  border-radius: 12px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+}
+
+.titulo-detalhe {
+  font-weight: bold;
+  text-align: center;
+  margin-top: 16px;
+}
+
+.frase {
+  font-style: italic;
+  border-left: 4px solid #3880ff;
+  padding: 4px 12px;
+  margin: 8px 0;
+}
+
+ion-toolbar {
+  --background: #7f51c0;
+  --color: white;
+}
+
+.livro-favorito { border-inline-start: 4px solid #7f51c0; }

@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-toolbar >
+    <ion-title> Livraria Online</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="hero">
+    <h1>Encontre seu próximo livro</h1>
+    <p>Milhares de títulos, autores e histórias.</p>
+    <ion-button routerLink="/lista" shape="round" color="light">Ver todos os livros</ion-button>
+    <ion-button routerLink="/favoritos" shape="round" fill="outline" color="light"> Meus favoritos</ion-button>
+  </div>
+
+  <h2 class="titulo-secao">Categorias</h2>
+  <div class="categorias">
+    @for (cat of categorias; track cat.id) {
+      <ion-chip
+        [color]="categoria === cat.id ? 'primary' : 'medium'"
+        [outline]="categoria !== cat.id"
+        (click)="categoria = cat.id"
+      >
+        {{ cat.nome }}
+      </ion-chip>
+    }
+  </div>
+
+  @if (carregando[categoria]) { <p class="centro" role="status">Carregando livros...</p> }
+  @else if (erros[categoria]) { <p class="centro" role="alert">Não foi possível carregar esta categoria.</p><ion-button (click)="carregar(categoria)">Tentar novamente</ion-button> }
+  @else {
+  @for (livro of livrosPorCategoria[categoria]; track livro.key) {
+    <ion-card button [routerLink]="['/detalhes', livro.key.replace('/works/', '')]">
+      @if (livro.cover_id) {
+        <img appCapaAlternativa class="capa-grande" [src]="'https://covers.openlibrary.org/b/id/' + livro.cover_id + '-L.jpg?default=false'" [alt]="livro.title" />
+      }
+      <ion-card-header>
+        <ion-card-subtitle>{{ (livro.authors?.[0]?.name ?? 'Autor desconhecido') | uppercase }}</ion-card-subtitle>
+        <ion-card-title>{{ livro.title }}</ion-card-title>
+      </ion-card-header>
+    </ion-card>
+  } @empty {
+    <p class="centro">Nenhum livro encontrado nesta categoria.</p>
+  }
+  }
+</ion-content>

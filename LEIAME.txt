@@ -1,0 +1,14 @@
+COMO RODAR O PROJETO
+
+Instale Node.js 22 e npm.
+Abra um terminal na pasta que contém package.json.
+
+npm ci
+npm start
+
+O navegador abre em http://localhost:4200.
+Para compilar a versão de produção: npm run build
+
+Consulte README.md para os requisitos, a estrutura e o roteiro de apresentação.
+Consulte docs/ALTERACOES.md para a explicação das alterações.
+
